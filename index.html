@@ -62,16 +62,10 @@
       font-weight: 700;
     }
     .brand-mark {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(24, 24, 24, 0.26);
-      border-radius: 50%;
-      font-family: var(--serif);
-      font-size: 1.8rem;
-      line-height: 1;
-      background: rgba(255,255,255,0.28);
+      width: 42px;
+      height: 42px;
+      flex: none;
+      object-fit: contain;
     }
     .brand-name {
       font-size: clamp(0.8rem, 1vw, 1.2rem);
@@ -437,26 +431,22 @@
     .site-header {
       position: sticky;
       top: 0;
+      width: 100%;
+      margin: 0;
+      padding-inline: var(--gutter);
       padding-top: 0;
       background: rgba(245, 241, 234, 0.94);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--line);
     }
     .header-inner {
+      width: min(100%, 1380px);
       min-height: 82px;
+      margin-inline: auto;
       padding-block: 0;
       border-bottom: 0;
     }
     .brand { gap: 0.85rem; }
-    .brand-mark {
-      width: 42px;
-      height: 42px;
-      border-radius: 50% 50% 50% 8px;
-      border-color: var(--accent);
-      background: transparent;
-      color: var(--accent);
-      font-weight: 600;
-    }
     .brand-name {
       display: grid;
       gap: 0.2rem;
@@ -789,7 +779,7 @@
   <header class="site-header wrap">
     <div class="header-inner">
       <a class="brand" href="#home" aria-label="Navakrithi home">
-        <span class="brand-mark" aria-hidden="true">N</span>
+        <img class="brand-mark" src="assets/navakrithi-mark.svg" alt="" aria-hidden="true">
         <span class="brand-name">NAVAKRITHI<span>DESIGNERS · INTERIORS &amp; CONSTRUCTION</span></span>
       </a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">Menu</button>

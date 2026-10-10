@@ -22,6 +22,7 @@
       --olive: #222222;
       --shadow: rgba(17, 24, 39, 0.08);
       --gutter: clamp(1.25rem, 5vw, 6rem);
+      --section-space: clamp(2.25rem, 5vw, 4rem);
       --sans: "Archivo", Arial, sans-serif;
       --serif: var(--sans);
     }
@@ -798,8 +799,15 @@
     .hero-stamp { writing-mode: horizontal-tb; }
 
     .proof-strip {
+      position: relative;
+      z-index: 2;
+      margin-top: -5rem;
       padding-block: 1.3rem;
-      background: var(--ink);
+      border-block: 1px solid rgba(255,255,255,0.32);
+      background: rgba(15,23,42,0.54);
+      box-shadow: inset 0 1px rgba(255,255,255,0.14), 0 14px 32px rgba(15,23,42,0.14);
+      -webkit-backdrop-filter: blur(22px) saturate(135%);
+      backdrop-filter: blur(22px) saturate(135%);
       color: #fff;
     }
     .proof-inner {
@@ -829,6 +837,19 @@
       letter-spacing: 0.1em;
       line-height: 1.5;
       text-transform: uppercase;
+    }
+    .proof-strip.is-visible { animation: proof-bar-in 650ms ease-out both; }
+    .proof-strip.is-visible .proof-item { animation: proof-item-in 500ms ease-out both; }
+    .proof-strip.is-visible .proof-item:nth-child(2) { animation-delay: 80ms; }
+    .proof-strip.is-visible .proof-item:nth-child(3) { animation-delay: 160ms; }
+    .proof-strip.is-visible .proof-item:nth-child(4) { animation-delay: 240ms; }
+    @keyframes proof-bar-in {
+      from { opacity: 0.65; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes proof-item-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .gallery-grid {
@@ -999,6 +1020,34 @@
       .site-footer { gap: 0.75rem; padding-block: 1rem 1.4rem; }
       .footer-links { gap: 0.9rem; }
     }
+
+    .gallery, .services, .story, .process, .contact { padding-block: var(--section-space); }
+    #services { padding-block-end: clamp(1.5rem, 2.5vw, 2.5rem); }
+    #projects { padding-block-start: clamp(1.5rem, 2.5vw, 2.5rem); }
+
+    .section-label { color: var(--accent); font-weight: 600; }
+    .story-copy > p.section-label { color: var(--accent); }
+    .section-heading h2,
+    .story-copy h2,
+    .services > h2,
+    .process-intro h2,
+    .contact h2 {
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: 1.1;
+    }
+    .contact h2 { color: #fff; }
+    .hero-title { font-weight: 600; letter-spacing: 0; line-height: 1.02; }
+    .hero-title em { color: inherit; font-weight: 600; }
+    .proof-item strong { color: #fff; font-family: var(--sans); font-weight: 600; letter-spacing: 0; }
+    .service h3, .process-step h3 { font-family: var(--sans); font-weight: 600; letter-spacing: 0; line-height: 1.12; }
+    #services {
+      padding-block-start: var(--section-space);
+      padding-block-end: clamp(1.5rem, 2.5vw, 2.5rem);
+    }
+    #projects { padding-block-start: clamp(1.5rem, 2.5vw, 2.5rem); }
   </style>
 </head>
 <body>
@@ -1043,8 +1092,8 @@
 
     <section class="proof-strip" aria-label="Navakrithi project experience">
       <div class="wrap proof-inner">
-        <div class="proof-item"><strong>110+</strong><span>Projects delivered</span></div>
-        <div class="proof-item"><strong>7+</strong><span>Years of experience</span></div>
+        <div class="proof-item"><strong data-count="110">110+</strong><span>Projects delivered</span></div>
+        <div class="proof-item"><strong data-count="7">7+</strong><span>Years of experience</span></div>
         <div class="proof-item"><strong>One team</strong><span>Design to delivery</span></div>
         <div class="proof-item"><strong>On time</strong><span>Fixed-date handover</span></div>
       </div>
@@ -1202,6 +1251,41 @@
 
     const year = document.getElementById('year');
     if (year) year.textContent = new Date().getFullYear();
+
+    const proofStrip = document.querySelector('.proof-strip');
+    if (proofStrip) {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealProof = () => {
+        proofStrip.classList.add('is-visible');
+        if (prefersReducedMotion) return;
+
+        proofStrip.querySelectorAll('[data-count]').forEach((counter) => {
+          const target = Number(counter.dataset.count);
+          const suffix = counter.textContent.replace(/^\d+/, '');
+          const startTime = performance.now();
+          const duration = 900;
+          const updateCount = (now) => {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            counter.textContent = `${Math.round(target * eased)}${suffix}`;
+            if (progress < 1) requestAnimationFrame(updateCount);
+          };
+          requestAnimationFrame(updateCount);
+        });
+      };
+
+      if ('IntersectionObserver' in window) {
+        const proofObserver = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            revealProof();
+            proofObserver.disconnect();
+          }
+        }, { threshold: 0.25 });
+        proofObserver.observe(proofStrip);
+      } else {
+        revealProof();
+      }
+    }
   </script>
 </body>
 </html>

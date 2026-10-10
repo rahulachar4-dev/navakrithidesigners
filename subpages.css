@@ -8,6 +8,7 @@
   --accent: #046bd2;
   --olive: #222222;
   --gutter: clamp(1.25rem, 5vw, 6rem);
+  --section-space: clamp(2.25rem, 5vw, 4rem);
   --sans: "Archivo", Arial, sans-serif;
   --serif: var(--sans);
 }
@@ -112,7 +113,7 @@ button { font: inherit; }
   font-size: 0.96rem;
   line-height: 1.8;
 }
-.page-content { padding-block: clamp(3rem, 7vw, 6rem); }
+.page-content { padding-block: var(--section-space); }
 .section-kicker {
   margin: 0 0 0.8rem;
   color: var(--accent);
@@ -155,7 +156,7 @@ button { font: inherit; }
   display: flex;
   flex-wrap: wrap;
   gap: 0.7rem;
-  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  margin-bottom: var(--section-space);
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--line);
 }
@@ -172,8 +173,8 @@ button { font: inherit; }
   color: #fff;
 }
 .gallery-category + .gallery-category {
-  margin-top: clamp(3rem, 7vw, 6rem);
-  padding-top: clamp(2rem, 4vw, 3.5rem);
+  margin-top: var(--section-space);
+  padding-top: clamp(1.25rem, 2.5vw, 2rem);
   border-top: 1px solid var(--line);
 }
 .gallery-category-heading { margin-bottom: 1.5rem; }
@@ -297,11 +298,11 @@ button { font: inherit; }
   .page-hero .wrap { gap: 0.75rem; }
   .page-hero h1, .page-title { font-size: clamp(2.4rem, 9vw, 3.5rem); line-height: 1.04; letter-spacing: 0; }
   .page-hero p:last-child { margin-top: 0.15rem; font-size: 0.9rem; line-height: 1.6; }
-  .page-content { padding-block: 2.25rem; }
+  .page-content { padding-block: var(--section-space); }
   .section-heading { margin-bottom: 1.35rem; font-size: clamp(1.9rem, 7.5vw, 2.4rem); line-height: 1.08; letter-spacing: 0; }
   .gallery-categories { gap: 0.45rem; margin-bottom: 1.5rem; padding-bottom: 0.75rem; }
   .gallery-categories a { padding: 0.6rem 0.75rem; font-size: 0.68rem; }
-  .gallery-category + .gallery-category { margin-top: 1.75rem; padding-top: 1.25rem; }
+  .gallery-category + .gallery-category { margin-top: var(--section-space); padding-top: 1.25rem; }
   .gallery-category-heading { margin-bottom: 1rem; }
   .gallery-grid, .process-list { grid-template-columns: 1fr; }
   .gallery-grid { gap: 1.15rem; }

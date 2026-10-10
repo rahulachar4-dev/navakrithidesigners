@@ -9,7 +9,7 @@
   --olive: #222222;
   --gutter: clamp(1.25rem, 5vw, 6rem);
   --section-space: clamp(2.25rem, 5vw, 4rem);
-  --sans: "Archivo", Arial, sans-serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   --serif: var(--sans);
 }
 
